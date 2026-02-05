@@ -3208,6 +3208,9 @@ h6,
     font-size: 24px;
   }
 }
+.cover-image-form img {
+    width: 79% !important;
+}
 .auth-cover-wrapper .auth-cover .cover-image {
   max-width: 100%;
   margin: auto;
@@ -3860,6 +3863,10 @@ h6,
   }
 }
 
+.main-wrapper-login{
+  margin-left: 0px!important;
+  padding-bottom: 0px!important;
+}
 .main-wrapper {
   -webkit-transition: all 0.3s ease-out 0s;
   -moz-transition: all 0.3s ease-out 0s;
