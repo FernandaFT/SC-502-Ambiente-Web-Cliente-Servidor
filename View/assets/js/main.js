@@ -24,7 +24,7 @@
   const menuToggleButton = document.querySelector("#menu-toggle");
   const menuToggleButtonIcon = document.querySelector("#menu-toggle i");
   const overlay = document.querySelector(".overlay");
-
+try{
   menuToggleButton.addEventListener("click", () => {
     sidebarNavWrapper.classList.toggle("active");
     overlay.classList.add("active");
@@ -45,6 +45,10 @@
       }
     }
   });
+}catch(ex){
+  
+}
+
   overlay.addEventListener("click", () => {
     sidebarNavWrapper.classList.remove("active");
     overlay.classList.remove("active");
