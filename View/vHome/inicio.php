@@ -1,5 +1,5 @@
 <?php
-include_once "../layout.php";
+include_once $_SERVER["DOCUMENT_ROOT"]."/SC-502-Ambiente-Web-Cliente-Servidor/View/layout.php";
 ?>
 <!DOCTYPE html>
 <html lang="en">
