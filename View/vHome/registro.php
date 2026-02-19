@@ -57,7 +57,7 @@ MostrarCSS();
                                         <div class="form-wrapper">
                                             <h3 class="mb-15">Registrarse</h3>
 
-                                            <form action="" method="POST">
+                                            <form action="" method="POST" id="formRegistro">
                                                 <div class="row">
                                                     <div class="col-12">
                                                         <div class="input-style-1">
@@ -71,6 +71,13 @@ MostrarCSS();
                                                             <label>Nombre</label>
                                                             <input type="text" placeholder="Nombre"
                                                             id="Nombre" name="Nombre"/>
+                                                        </div>
+                                                    </div>
+                                                    <div class="col-12">
+                                                        <div class="input-style-1">
+                                                            <label>Correo Electrónico</label>
+                                                            <input type="text" placeholder="Correo Electrónico"
+                                                            id="CorreoElectronico" name="CorreoElectronico"/>
                                                         </div>
                                                     </div>
                                                     <div class="col-12">
@@ -110,6 +117,7 @@ MostrarCSS();
     <?php
     MostrarJS();
     ?>
+    <script src="../assets/funciones/registro.js"></script>
 </body>
 
 </html>
