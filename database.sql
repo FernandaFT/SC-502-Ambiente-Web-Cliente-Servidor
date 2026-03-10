@@ -29,10 +29,12 @@ CREATE TABLE `tusuario` (
   `Identificacion` varchar(15) NOT NULL,
   `Nombre` varchar(200) NOT NULL,
   `Contrasenna` varchar(15) NOT NULL,
-  `CorreoElectronico` varchar(100) DEFAULT NULL,
-  `Estado` bit(1) DEFAULT NULL,
-  PRIMARY KEY (`Consecutivo`)
-) ENGINE=InnoDB AUTO_INCREMENT=5 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+  `CorreoElectronico` varchar(100) NOT NULL,
+  `Estado` bit(1) NOT NULL,
+  PRIMARY KEY (`Consecutivo`),
+  UNIQUE KEY `UK_Identificacion` (`Identificacion`),
+  UNIQUE KEY `UK_CorreoElectronico` (`CorreoElectronico`)
+) ENGINE=InnoDB AUTO_INCREMENT=29 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -41,14 +43,14 @@ CREATE TABLE `tusuario` (
 
 LOCK TABLES `tusuario` WRITE;
 /*!40000 ALTER TABLE `tusuario` DISABLE KEYS */;
-INSERT INTO `tusuario` VALUES (4,'116700557','Fernanda Fajardo','ana13278','mfajardo00557@ufide.ac.cr',_binary '');
+INSERT INTO `tusuario` VALUES (15,'119310359','BONILLA MIRANDA MAUREEM VALERIA','YZZIRJGX','mbonilla10359@ufide.ac.cr',_binary ''),(16,'304590415','EDUARDO JOSE CALVO CASTILLO','90415','ecalvo90415@ufide.ac.cr',_binary ''),(21,'116700557','FAJARDO TORRES MARIA FERNANDA','ZKFJNENN','nanda199784@gmail.com',_binary ''),(27,'116700558','MARIA GUADALUPE FAJARDO TORRES','maria123','mfajardo00557@ufide.ac.cr',_binary '');
 /*!40000 ALTER TABLE `tusuario` ENABLE KEYS */;
 UNLOCK TABLES;
 
 --
 -- Dumping routines for database 'mn_db'
 --
-/*!50003 DROP PROCEDURE IF EXISTS `spIniciarSesion` */;
+/*!50003 DROP PROCEDURE IF EXISTS `sp_ActualizarContrasenna` */;
 /*!50003 SET @saved_cs_client      = @@character_set_client */ ;
 /*!50003 SET @saved_cs_results     = @@character_set_results */ ;
 /*!50003 SET @saved_col_connection = @@collation_connection */ ;
@@ -58,27 +60,23 @@ UNLOCK TABLES;
 /*!50003 SET @saved_sql_mode       = @@sql_mode */ ;
 /*!50003 SET sql_mode              = 'NO_ZERO_IN_DATE,NO_ZERO_DATE,NO_ENGINE_SUBSTITUTION' */ ;
 DELIMITER ;;
-CREATE DEFINER=`root`@`localhost` PROCEDURE `spIniciarSesion`(
-    pCorreoElectronico varchar(100),
-    pContrasenna varchar(15)
+CREATE DEFINER=`root`@`localhost` PROCEDURE `sp_ActualizarContrasenna`(	
+	pNuevaContrasenna varchar(15),
+    pConsecutivo int
 )
 BEGIN
-	SELECT 	Consecutivo,
-			Identificacion,
-            Nombre,
-            CorreoElectronico,
-            Estado
-	FROM tusuario
-    WHERE CorreoElectronico = pCorreoElectronico
-    AND Contrasenna = pContrasenna
-    AND Estado = 1;
+
+	UPDATE 	tusuario
+    SET		Contrasenna = pNuevaContrasenna
+	WHERE 	Consecutivo = pConsecutivo;
+
 END ;;
 DELIMITER ;
 /*!50003 SET sql_mode              = @saved_sql_mode */ ;
 /*!50003 SET character_set_client  = @saved_cs_client */ ;
 /*!50003 SET character_set_results = @saved_cs_results */ ;
 /*!50003 SET collation_connection  = @saved_col_connection */ ;
-/*!50003 DROP PROCEDURE IF EXISTS `spRegistrar` */;
+/*!50003 DROP PROCEDURE IF EXISTS `sp_IniciarSesion` */;
 /*!50003 SET @saved_cs_client      = @@character_set_client */ ;
 /*!50003 SET @saved_cs_results     = @@character_set_results */ ;
 /*!50003 SET @saved_col_connection = @@collation_connection */ ;
@@ -88,15 +86,79 @@ DELIMITER ;
 /*!50003 SET @saved_sql_mode       = @@sql_mode */ ;
 /*!50003 SET sql_mode              = 'NO_ZERO_IN_DATE,NO_ZERO_DATE,NO_ENGINE_SUBSTITUTION' */ ;
 DELIMITER ;;
-CREATE DEFINER=`root`@`localhost` PROCEDURE `spRegistrar`(
-	pIdentificacion varchar(15),
-	pNombre varchar(200),
-	pContrasenna varchar(15),
-    pCorreoElectronico varchar(100)
-    )
+CREATE DEFINER=`root`@`localhost` PROCEDURE `sp_IniciarSesion`(
+    pCorreoElectroncio varchar(100),
+    pContrasenna varchar(15)
+)
 BEGIN
-	INSERT INTO tusuario (Identificacion,Nombre,Contrasenna, CorreoElectronico, Estado)
-	VALUES (pIdentificacion, pNombre, pContrasenna,pCorreoElectronico,1);
+
+	SELECT  Consecutivo,
+			Identificacion,
+			Nombre,
+			CorreoElectronico,
+			Estado
+	FROM	tusuario
+    WHERE 	CorreoElectronico = pCorreoElectroncio
+		AND	Contrasenna = pContrasenna
+        AND Estado = 1;
+
+END ;;
+DELIMITER ;
+/*!50003 SET sql_mode              = @saved_sql_mode */ ;
+/*!50003 SET character_set_client  = @saved_cs_client */ ;
+/*!50003 SET character_set_results = @saved_cs_results */ ;
+/*!50003 SET collation_connection  = @saved_col_connection */ ;
+/*!50003 DROP PROCEDURE IF EXISTS `sp_Registrar` */;
+/*!50003 SET @saved_cs_client      = @@character_set_client */ ;
+/*!50003 SET @saved_cs_results     = @@character_set_results */ ;
+/*!50003 SET @saved_col_connection = @@collation_connection */ ;
+/*!50003 SET character_set_client  = utf8mb4 */ ;
+/*!50003 SET character_set_results = utf8mb4 */ ;
+/*!50003 SET collation_connection  = utf8mb4_general_ci */ ;
+/*!50003 SET @saved_sql_mode       = @@sql_mode */ ;
+/*!50003 SET sql_mode              = 'NO_ZERO_IN_DATE,NO_ZERO_DATE,NO_ENGINE_SUBSTITUTION' */ ;
+DELIMITER ;;
+CREATE DEFINER=`root`@`localhost` PROCEDURE `sp_Registrar`(	
+	pIdentificacion varchar(15), 
+	pNombre varchar(200), 
+    pContrasenna varchar(15),
+    pCorreoElectroncio varchar(100)
+)
+BEGIN
+
+	INSERT INTO tusuario(Identificacion,Nombre,Contrasenna,CorreoElectronico,Estado)
+	VALUES (pIdentificacion, pNombre, pContrasenna,pCorreoElectroncio,1);
+
+END ;;
+DELIMITER ;
+/*!50003 SET sql_mode              = @saved_sql_mode */ ;
+/*!50003 SET character_set_client  = @saved_cs_client */ ;
+/*!50003 SET character_set_results = @saved_cs_results */ ;
+/*!50003 SET collation_connection  = @saved_col_connection */ ;
+/*!50003 DROP PROCEDURE IF EXISTS `sp_ValidarCorreo` */;
+/*!50003 SET @saved_cs_client      = @@character_set_client */ ;
+/*!50003 SET @saved_cs_results     = @@character_set_results */ ;
+/*!50003 SET @saved_col_connection = @@collation_connection */ ;
+/*!50003 SET character_set_client  = utf8mb4 */ ;
+/*!50003 SET character_set_results = utf8mb4 */ ;
+/*!50003 SET collation_connection  = utf8mb4_general_ci */ ;
+/*!50003 SET @saved_sql_mode       = @@sql_mode */ ;
+/*!50003 SET sql_mode              = 'NO_ZERO_IN_DATE,NO_ZERO_DATE,NO_ENGINE_SUBSTITUTION' */ ;
+DELIMITER ;;
+CREATE DEFINER=`root`@`localhost` PROCEDURE `sp_ValidarCorreo`(
+    pCorreoElectroncio varchar(100)
+)
+BEGIN
+
+	SELECT  Consecutivo,
+			Identificacion,
+			Nombre,
+			CorreoElectronico,
+			Estado
+	FROM	tusuario
+    WHERE 	CorreoElectronico = pCorreoElectroncio
+        AND Estado = 1;
+
 END ;;
 DELIMITER ;
 /*!50003 SET sql_mode              = @saved_sql_mode */ ;
@@ -113,4 +175,4 @@ DELIMITER ;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2026-02-18 20:52:19
+-- Dump completed on 2026-03-09 18:11:42

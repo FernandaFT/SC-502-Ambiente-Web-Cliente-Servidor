@@ -1,6 +1,6 @@
 <?php
-include_once $_SERVER["DOCUMENT_ROOT"]."/SC-502-Ambiente-Web-Cliente-Servidor/View/layoutExterno.php";
-include_once $_SERVER["DOCUMENT_ROOT"]."/SC-502-Ambiente-Web-Cliente-Servidor/Controller/HomeController.php";
+include_once $_SERVER["DOCUMENT_ROOT"] . "/SC-502-Ambiente-Web-Cliente-Servidor/View/layoutExterno.php";
+include_once $_SERVER["DOCUMENT_ROOT"] . "/SC-502-Ambiente-Web-Cliente-Servidor/Controller/HomeController.php";
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -48,13 +48,16 @@ MostrarCSS();
                                     </div>
                                 </div>
                                 <div class="col-lg-6">
-                                    <?php
-                                        if(isset($_POST["Mensaje"])){
-                                            echo $_POST["Mensaje"];
-                                        }
-                                    ?>
                                     <div class="signin-wrapper">
                                         <div class="form-wrapper">
+                                            <?php
+                                                if (isset($_POST["Mensaje"])) {
+                                                    echo
+                                                    '<div class="alert alert-danger text-center" role="alert">
+                                                    ' . $_POST["Mensaje"] . '
+                                                    </div>';
+                                                }
+                                            ?>
                                             <h3 class="mb-15">Iniciar Sesión</h3>
 
                                             <form action="" method="POST" id="formLogin">
@@ -63,14 +66,14 @@ MostrarCSS();
                                                         <div class="input-style-1">
                                                             <label>Correo Electrónico</label>
                                                             <input type="text" placeholder="Correo Electrónico"
-                                                            id="CorreoElectronico" name="CorreoElectronico"/>
+                                                                id="CorreoElectronico" name="CorreoElectronico" />
                                                         </div>
                                                     </div>
                                                     <div class="col-12">
                                                         <div class="input-style-1">
                                                             <label>Contraseña</label>
                                                             <input type="password" placeholder="Contraseña"
-                                                            id="Contrasenna" name="Contrasenna"/>
+                                                                id="Contrasenna" name="Contrasenna" />
                                                         </div>
                                                     </div>
                                                     <div class="col-xxl-12 col-lg-12 col-md-12">
@@ -83,14 +86,14 @@ MostrarCSS();
                                                     <div class="col-12">
                                                         <div class="button-group d-flex justify-content-center flex-wrap">
                                                             <button type="submit" class="main-btn primary-btn btn-hover w-100 text-center"
-                                                            id="btnIniciarSesion" name="btnIniciarSesion">
+                                                                id="btnIniciarSesion" name="btnIniciarSesion">
                                                                 Procesar
                                                             </button>
                                                         </div>
                                                     </div>
                                                 </div>
                                             </form>
-                                            
+
                                             <div class="singin-option pt-40">
                                                 <p class="text-sm text-medium text-dark text-center">
                                                     No tiene una cuenta aún?

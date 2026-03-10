@@ -1,36 +1,86 @@
 <?php
 include_once $_SERVER["DOCUMENT_ROOT"]."/SC-502-Ambiente-Web-Cliente-Servidor/Model/UtilitarioModel.php";
 
-function RegistrarModel($identificacion, $nombre, $contrasenna,$correoElectronico)
+function RegistrarModel($identificacion, $nombre, $contrasenna, $correoElectroncio)
 {
-    //Paso 1. Abrir la BD
-    $context = OpenDataBase();
+    try 
+    { 
+        $context = OpenDatabase();
 
-    //´Paso 2. Ejecutar la sentencia
-    $sp = "CALL spRegistrar('$identificacion', '$nombre', '$contrasenna', '$correoElectronico')";
-    $result = $context -> query($sp);
+        $sp = "CALL sp_Registrar('$identificacion', '$nombre', '$contrasenna', '$correoElectroncio')";
+        $result = $context -> query($sp);
 
-    //Paso 3. Cerrar la BD
-    CloseDataBase($context);
-    return $result;
-};
+        CloseDatabase($context);
+        return $result;
+    }
+    catch (Exception $e) 
+    {
+        return false;
+    }
+}
 
 function IniciarSesionModel($correoElectronico, $contrasenna)
 {
-    //Paso 1. Abrir la BD
-    $context = OpenDataBase();
+    try 
+    { 
+        $context = OpenDatabase();
 
-    //´Paso 2. Ejecutar la sentencia
-    $sp = "CALL spIniciarSesion('$correoElectronico', '$contrasenna')";
-    $result = $context -> query($sp);
+        $sp = "CALL sp_IniciarSesion('$correoElectronico', '$contrasenna')";
+        $result = $context -> query($sp);
 
-    $datos = null;
-    while($fila = $result -> fetch_assoc())
-    {
-         $datos = $fila;
+        $datos = null;
+        while($fila = $result -> fetch_assoc())
+        {
+            $datos = $fila;   
+        }
+
+        CloseDatabase($context);
+        return $datos;
     }
+    catch (Exception $e) 
+    {
+        return null;
+    }
+}
 
-    //Paso 3. Cerrar la BD
-    CloseDataBase($context);
-    return $datos;
-};
+function ValidarCorreoModel($correoElectronico)
+{
+    try 
+    { 
+        $context = OpenDatabase();
+
+        $sp = "CALL sp_ValidarCorreo('$correoElectronico')";
+        $result = $context -> query($sp);
+
+        $datos = null;
+        while($fila = $result -> fetch_assoc())
+        {
+            $datos = $fila;   
+        }
+
+        CloseDatabase($context);
+        return $datos;
+    }
+    catch (Exception $e) 
+    {
+        return null;
+    }
+}
+
+function ActualizarContrasennaModel($nuevaContrasenna, $consecutivo)
+{
+   try 
+    { 
+        $context = OpenDatabase();
+
+        $sp = "CALL sp_ActualizarContrasenna('$nuevaContrasenna', '$consecutivo')";
+        $result = $context -> query($sp);
+
+        CloseDatabase($context);
+        return $result;
+    }
+    catch (Exception $e) 
+    {
+        return false;
+    }
+}

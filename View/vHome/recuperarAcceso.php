@@ -1,5 +1,6 @@
 <?php
-include_once $_SERVER["DOCUMENT_ROOT"]."/SC-502-Ambiente-Web-Cliente-Servidor/View/layoutExterno.php";
+include_once $_SERVER["DOCUMENT_ROOT"] . "/SC-502-Ambiente-Web-Cliente-Servidor/View/layoutExterno.php";
+include_once $_SERVER["DOCUMENT_ROOT"] . "/SC-502-Ambiente-Web-Cliente-Servidor/Controller/HomeController.php";
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -49,18 +50,28 @@ MostrarCSS();
                                 <div class="col-lg-6">
                                     <div class="signin-wrapper">
                                         <div class="form-wrapper">
+                                            <?php
+                                                if (isset($_POST["Mensaje"])) {
+                                                    echo
+                                                    '<div class="alert alert-danger text-center" role="alert">
+                                                    ' . $_POST["Mensaje"] . '
+                                                    </div>';
+                                                }
+                                            ?>
                                             <h3 class="mb-15">Recuperar Acceso</h3>
-                                            <form action="#">
+                                            <form id="formRecuperarAcceso" action="" method="POST">
                                                 <div class="row">
                                                     <div class="col-12">
                                                         <div class="input-style-1">
-                                                            <label>Identificación</label>
-                                                            <input type="text" placeholder="Identificación" />
+                                                            <label>Correo Electrónico</label>
+                                                            <input type="text" placeholder="Correo Electrónico"
+                                                                id="CorreoElectronico" name="CorreoElectronico" />
                                                         </div>
                                                     </div>
                                                     <div class="col-12">
                                                         <div class="button-group d-flex justify-content-center flex-wrap">
-                                                            <button type="submit" class="main-btn primary-btn btn-hover w-100 text-center">
+                                                            <button type="submit" id="btnRecuperarAcceso" name="btnRecuperarAcceso"
+                                                                    class="main-btn primary-btn btn-hover w-100 text-center">
                                                                 Procesar
                                                             </button>
                                                         </div>
@@ -86,6 +97,7 @@ MostrarCSS();
     <?php
     MostrarJS();
     ?>
+    <script src="../assets/funciones/recuperarAcceso.js"></script>
 </body>
 
 </html>
