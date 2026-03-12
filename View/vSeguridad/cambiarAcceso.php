@@ -1,11 +1,13 @@
 <?php
-include_once $_SERVER["DOCUMENT_ROOT"]."/SC-502-Ambiente-Web-Cliente-Servidor/View/layout.php";
+include_once $_SERVER["DOCUMENT_ROOT"] . "/MN_ECC/Views/layout.php";
 ?>
+
 <!DOCTYPE html>
 <html lang="en">
-  <?php
-  MostrarCSS();
-  ?>
+
+<?php
+MostrarCSS();
+?>
 
 <body>
 
@@ -14,16 +16,16 @@ include_once $_SERVER["DOCUMENT_ROOT"]."/SC-502-Ambiente-Web-Cliente-Servidor/Vi
   </div>
 
   <?php
-  MostrarMenu();
+  MostrarNav();
   ?>
 
   <div class="overlay"></div>
-
   <main class="main-wrapper">
 
     <?php
     MostrarHeader();
     ?>
+
     <section class="section">
       <div class="container-fluid">
         <div class="title-wrapper pt-30">
@@ -33,13 +35,27 @@ include_once $_SERVER["DOCUMENT_ROOT"]."/SC-502-Ambiente-Web-Cliente-Servidor/Vi
                 <h2>Inicio</h2>
               </div>
             </div>
+            <div class="col-md-6">
+              <div class="breadcrumb-wrapper">
+                <nav aria-label="breadcrumb">
+                  <ol class="breadcrumb">
+                    <li class="breadcrumb-item">
+                      <a href="#0">Dashboard</a>
+                    </li>
+                    <li class="breadcrumb-item active" aria-current="page">
+                      Page
+                    </li>
+                  </ol>
+                </nav>
+              </div>
+            </div>
           </div>
         </div>
       </div>
     </section>
 
     <?php
-    MostrarFooter();
+    MostrarFooter()
     ?>
 
   </main>

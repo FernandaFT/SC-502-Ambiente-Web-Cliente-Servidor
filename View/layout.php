@@ -1,14 +1,13 @@
 <?php
 
-if(session_status() === PHP_SESSION_NONE)
-{
+if (session_status() === PHP_SESSION_NONE) {
     session_start();
 }
 
 function MostrarMenu()
 {
     echo
-        '<aside class="sidebar-nav-wrapper">
+    '<aside class="sidebar-nav-wrapper">
             <div class="navbar-logo">
                 <a href="index.html">
                 <img src="../assets/images/logo.svg" alt="logo" />
@@ -43,10 +42,75 @@ function MostrarMenu()
         </aside>';
 }
 
+function MOstrarHeader()
+{
+    $nombreUsuario = "";
+
+    if (isset($_SESSION["NombreUsuario"])) {
+        $nombreUsuario = $_SESSION["NombreUsuario"];
+    } else {
+        header("Location: login.php");
+        exit();
+    }
+    echo
+    '<header class="header">
+            <div class="container-fluid">
+            <div class="row">
+                <div class="col-lg-5 col-md-5 col-6">
+                <div class="header-left d-flex align-items-center">
+                    <div class="menu-toggle-btn mr-15">
+                    <button id="menu-toggle" class="main-btn primary-btn btn-hover">
+                        <i class="lni lni-chevron-left me-2"></i> 
+                    </button>
+                    </div>
+                </div>
+                </div>
+                <div class="col-lg-7 col-md-7 col-6">
+                <div class="header-right">
+                    <div class="profile-box ml-15">
+                    <button class="dropdown-toggle bg-transparent border-0" type="button" id="profile"
+                        data-bs-toggle="dropdown" aria-expanded="false">
+                        <div class="profile-info">
+                        <div class="info">
+                            <div>
+                                <h6 class="fw-500">' . $nombreUsuario . '</h6>
+                            </div>
+                            <div class="image">
+                                <img src="../assets/images/profile-image.png" alt="" />
+                            </div>    
+                        </div>
+                        </div>
+                    </button>
+                    <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="profile">
+                        <li>
+                            <a href="#0">
+                                <i class="lni lni-user"></i> Perfil
+                            </a>
+                        </li>
+                        <li>
+                            <a href="../vSeguridad/cambiarAcceso.php"> 
+                                <i class="lni lni-cog"></i> Seguridad 
+                            </a>
+                        </li>
+                        <li class="divider"></li>
+                        <li>
+                            <a href="#0" onclick="CerrarSesion()">
+                                <i class="lni lni-exit"></i> Cerrar Sesión
+                            </a>
+                        </li>
+                    </ul>
+                    </div>
+                </div>
+                </div>
+            </div>
+            </div>
+        </header>';
+}
+
 function MostrarFooter()
 {
     echo
-        '<footer class="footer">
+    '<footer class="footer">
             <div class="container-fluid">
             <div class="row">
                 <div class="col-md-6 order-last order-md-first">
@@ -70,64 +134,10 @@ function MostrarFooter()
         </footer>';
 }
 
-function MOstrarHeader()
-{
-    $nombreUsuario = $_SESSION["NombreUsuario"];
-    echo
-        '<header class="header">
-            <div class="container-fluid">
-            <div class="row">
-                <div class="col-lg-5 col-md-5 col-6">
-                <div class="header-left d-flex align-items-center">
-                    <div class="menu-toggle-btn mr-15">
-                    <button id="menu-toggle" class="main-btn primary-btn btn-hover">
-                        <i class="lni lni-chevron-left me-2"></i> Menu
-                    </button>
-                    </div>
-                </div>
-                </div>
-                <div class="col-lg-7 col-md-7 col-6">
-                <div class="header-right">
-                    <div class="profile-box ml-15">
-                    <button class="dropdown-toggle bg-transparent border-0" type="button" id="profile"
-                        data-bs-toggle="dropdown" aria-expanded="false">
-                        <div class="profile-info">
-                        <div class="info">
-                            <div>
-                                <h6 class="fw-500">' . $nombreUsuario .'</h6>
-                            </div>
-                            <div class="image">
-                                <img src="../assets/images/profile-image.png" alt="" />
-                            </div>    
-                        </div>
-                        </div>
-                    </button>
-                    <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="profile">
-                        <li>
-                        <a href="#0">
-                            <i class="lni lni-user"></i> View Profile
-                        </a>
-                        </li>
-                        <li>
-                        <a href="#0"> <i class="lni lni-cog"></i> Settings </a>
-                        </li>
-                        <li class="divider"></li>
-                        <li>
-                        <a href="#0"> <i class="lni lni-exit"></i> Sign Out </a>
-                        </li>
-                    </ul>
-                    </div>
-                </div>
-                </div>
-            </div>
-            </div>
-        </header>';
-}
-
 function MostrarCSS()
 {
     echo
-        '<head>
+    '<head>
             <meta charset="UTF-8" />
             <meta http-equiv="X-UA-Compatible" content="IE=edge" />
             <meta name="viewport" content="width=device-width, initial-scale=1.0" />
@@ -145,7 +155,9 @@ function MostrarCSS()
 function MostrarJS()
 {
     echo
-        '<script src="../assets/js/bootstrap.bundle.min.js"></script>
+    '   <script src="https://code.jquery.com/jquery-3.7.1.min.js"></script>
+        <script src="https://cdn.jsdelivr.net/npm/jquery-validation@1.19.5/dist/jquery.validate.min.js"></script>
+        <script src="../assets/js/bootstrap.bundle.min.js"></script>
         <script src="../assets/js/Chart.min.js"></script>
         <script src="../assets/js/dynamic-pie-chart.js"></script>
         <script src="../assets/js/moment.min.js"></script>
@@ -153,6 +165,6 @@ function MostrarJS()
         <script src="../assets/js/jvectormap.min.js"></script>
         <script src="../assets/js/world-merc.js"></script>
         <script src="../assets/js/polyfill.js"></script>
-        <script src="../assets/js/main.js"></script>';
+        <script src="../assets/js/main.js"></script>
+        <script src="../assets/funciones/cerrarSesion.js"></script>';
 }
-?>

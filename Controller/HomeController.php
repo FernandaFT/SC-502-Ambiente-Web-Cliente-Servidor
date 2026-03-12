@@ -73,3 +73,9 @@ if (isset($_POST["btnRecuperarAcceso"])) {
 
     $_POST["Mensaje"] = "Su información no fue validada correctamente";
 }
+
+if(isset($_POST["btnCerrarSesion"])) {
+     session_unset();
+     session_destroy();
+     echo json_encode("OK");
+}
