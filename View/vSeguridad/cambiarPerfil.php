@@ -45,7 +45,7 @@ MostrarCSS();
                                 }
                                 ?>
 
-                                 <h3 class="mb-15">Cambiar Perfil</h3>
+                                <h3 class="mb-15">Cambiar Perfil</h3>
 
                                 <form id="formCambiarPerfil" action="" method="POST">
                                     <div class="row">

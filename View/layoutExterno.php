@@ -41,7 +41,7 @@ function MostrarFooter()
                     <p class="text-sm">
                     Designed and Developed by
                     <a href="https://plainadmin.com" rel="nofollow" target="_blank">
-                        PlainAdmin
+                        MN WEB
                     </a>
                     </p>
                 </div>
