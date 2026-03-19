@@ -22,6 +22,11 @@ function EnviarCorreo($asunto, $contenido, $destinatario)
     $correoSalida = "mfajardo00557@ufide.ac.cr";
     $contrasennaSalida = "RYWF_TFR9"; //Contaseña asociada al correo
 
+    if($contrasennaSalida == "")
+    {
+        return true; //Simulación de envío exitoso.
+    }
+
     $mail = new PHPMailer();
     $mail->CharSet = 'UTF-8';
 
@@ -38,14 +43,15 @@ function EnviarCorreo($asunto, $contenido, $destinatario)
     $mail->Subject = $asunto;
     $mail->MsgHTML($contenido);
     $mail->AddAddress($destinatario);
+    $mail->send();
 
-    try {
-        if ($mail->send()) {
-            return true; // Envío exitoso
-        } else {
-            return true; // Falló el envío
-        }
-    } catch (Exception $e) {
-        return false;
-    }
+    // try {
+    //     if ($mail->send()) {
+    //         return true; // Envío exitoso
+    //     } else {
+    //         return false; // Falló el envío
+    //     }
+    // } catch (Exception $e) {
+    //     return false;
+    // }
 }
