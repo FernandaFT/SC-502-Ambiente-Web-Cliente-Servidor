@@ -34,7 +34,7 @@ CREATE TABLE `tproducto` (
   `Estado` bit(1) NOT NULL,
   PRIMARY KEY (`Consecutivo`),
   UNIQUE KEY `UK_Nombre` (`Nombre`)
-) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=10 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -43,7 +43,7 @@ CREATE TABLE `tproducto` (
 
 LOCK TABLES `tproducto` WRITE;
 /*!40000 ALTER TABLE `tproducto` DISABLE KEYS */;
-INSERT INTO `tproducto` VALUES (1,'Oxbow Essentials Adult Rabbit Food',1600.00,'El alimento Oxbow Essentials Adult Rabbit Food es un concentrado premium para conejos adultos, elaborado principalmente a base de heno de timothy. Se caracteriza por su alto contenido de fibra, lo que favorece una digestión saludable y ayuda al desgaste natural de los dientes.',8,'IMAGEN',_binary ''),(2,'Kaytee Forti-Diet Pro Health Hamster & Gerbil Food',1900.00,'El alimento Kaytee Forti-Diet Pro Health Hamster & Gerbil Food es un concentrado balanceado diseñado para cubrir las necesidades nutricionales de los hámsteres en todas sus etapas de vida. Está compuesto por una mezcla de granos, semillas, pellets y superalimentos como linaza, calabaza y espinaca, que contribuyen a una dieta variada y completa.',6,'IMAGEN',_binary '');
+INSERT INTO `tproducto` VALUES (8,'Pedigree',14490.00,'Es un alimento seco completo y balanceado para perros adultos. Según la ficha del producto, ofrece 28% más proteína, aporta Omega 6 para piel y pelo saludables, y contiene vitamina E, selenio y antioxidantes.',7,'/SC-502-Ambiente-Web-Cliente-Servidor/View/assets/imgProductos/Pedigree.png',_binary ''),(9,'Purina Pro Plan',35600.00,'Alimento para perros adultos de raza medianas, de 1 a 7 años, con pollo como primer ingrediente; está formulado para apoyar la energía, la digestión y la salud general.',10,'/SC-502-Ambiente-Web-Cliente-Servidor/View/assets/imgProductos/proplan.png',_binary '');
 /*!40000 ALTER TABLE `tproducto` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -91,7 +91,7 @@ CREATE TABLE `tusuario` (
   UNIQUE KEY `UK_CorreoElectronico` (`CorreoElectronico`),
   KEY `FK_Usuario_Rol` (`ConsecutivoRol`),
   CONSTRAINT `FK_Usuario_Rol` FOREIGN KEY (`ConsecutivoRol`) REFERENCES `trol` (`Consecutivo`)
-) ENGINE=InnoDB AUTO_INCREMENT=19 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=18 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -100,7 +100,7 @@ CREATE TABLE `tusuario` (
 
 LOCK TABLES `tusuario` WRITE;
 /*!40000 ALTER TABLE `tusuario` DISABLE KEYS */;
-INSERT INTO `tusuario` VALUES (15,'119310359','BONILLA MIRANDA MAUREEM VALERIA','12345678','mbonilla10359@ufide.ac.cr',_binary '',2),(16,'304590415','EDUARDO JOSE CALVO CASTILLO','90415','ecalvo90415@ufide.ac.cr',_binary '',1),(17,'504420898','MARIN CHAVARRIA JIMENA MARIA','12345678','jmarin20898@ufide.ac.cr',_binary '',2),(18,'116700557','FAJARDO TORRES MARIA FERNANDA','fer123','nanda199784@gmail.com',_binary '',2);
+INSERT INTO `tusuario` VALUES (15,'119310359','BONILLA MIRANDA MAUREEM VALERIA','12345678','mbonilla10359@ufide.ac.cr',_binary '',2),(16,'304590415','EDUARDO JOSE CALVO CASTILLO','90415','ecalvo90415@ufide.ac.cr',_binary '',1),(17,'504420898','MARIN CHAVARRIA JIMENA MARIA','12345678','jmarin20898@ufide.ac.cr',_binary '',2);
 /*!40000 ALTER TABLE `tusuario` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -126,6 +126,35 @@ BEGIN
 	UPDATE 	tusuario
     SET		Contrasenna = pNuevaContrasenna
 	WHERE 	Consecutivo = pConsecutivo;
+
+END ;;
+DELIMITER ;
+/*!50003 SET sql_mode              = @saved_sql_mode */ ;
+/*!50003 SET character_set_client  = @saved_cs_client */ ;
+/*!50003 SET character_set_results = @saved_cs_results */ ;
+/*!50003 SET collation_connection  = @saved_col_connection */ ;
+/*!50003 DROP PROCEDURE IF EXISTS `sp_ActualizarEstadoProducto` */;
+/*!50003 SET @saved_cs_client      = @@character_set_client */ ;
+/*!50003 SET @saved_cs_results     = @@character_set_results */ ;
+/*!50003 SET @saved_col_connection = @@collation_connection */ ;
+/*!50003 SET character_set_client  = utf8mb4 */ ;
+/*!50003 SET character_set_results = utf8mb4 */ ;
+/*!50003 SET collation_connection  = utf8mb4_general_ci */ ;
+/*!50003 SET @saved_sql_mode       = @@sql_mode */ ;
+/*!50003 SET sql_mode              = 'NO_ZERO_IN_DATE,NO_ZERO_DATE,NO_ENGINE_SUBSTITUTION' */ ;
+DELIMITER ;;
+CREATE DEFINER=`root`@`localhost` PROCEDURE `sp_ActualizarEstadoProducto`(	
+	pConsecutivoProducto int
+)
+BEGIN
+
+    UPDATE 	tproducto
+    SET		Estado = CASE WHEN Estado = 1 THEN 0 ELSE 1 END
+	WHERE 	Consecutivo = pConsecutivoProducto;
+    
+	/*
+		DELETE FROM tproducto WHERE Consecutivo = pConsecutivoProducto;
+	*/
 
 END ;;
 DELIMITER ;
@@ -163,6 +192,100 @@ DELIMITER ;
 /*!50003 SET character_set_client  = @saved_cs_client */ ;
 /*!50003 SET character_set_results = @saved_cs_results */ ;
 /*!50003 SET collation_connection  = @saved_col_connection */ ;
+/*!50003 DROP PROCEDURE IF EXISTS `sp_ActualizarProducto` */;
+/*!50003 SET @saved_cs_client      = @@character_set_client */ ;
+/*!50003 SET @saved_cs_results     = @@character_set_results */ ;
+/*!50003 SET @saved_col_connection = @@collation_connection */ ;
+/*!50003 SET character_set_client  = utf8mb4 */ ;
+/*!50003 SET character_set_results = utf8mb4 */ ;
+/*!50003 SET collation_connection  = utf8mb4_general_ci */ ;
+/*!50003 SET @saved_sql_mode       = @@sql_mode */ ;
+/*!50003 SET sql_mode              = 'NO_ZERO_IN_DATE,NO_ZERO_DATE,NO_ENGINE_SUBSTITUTION' */ ;
+DELIMITER ;;
+CREATE DEFINER=`root`@`localhost` PROCEDURE `sp_ActualizarProducto`(	
+	pConsecutivo int(11),
+    pNombre varchar(100), 
+    pDescripcion varchar(1000), 
+    pPrecio decimal(10,2), 
+    pCantidad int(11), 
+    pImagenProducto varchar(100)
+)
+BEGIN
+
+	UPDATE tproducto
+	SET	Nombre = pNombre,
+		Precio = pPrecio,
+		Descripcion = pDescripcion,
+		Cantidad = pCantidad,
+		Imagen = CASE WHEN pImagenProducto != '' THEN pImagenProducto ELSE Imagen END
+	WHERE Consecutivo = pConsecutivo;
+
+END ;;
+DELIMITER ;
+/*!50003 SET sql_mode              = @saved_sql_mode */ ;
+/*!50003 SET character_set_client  = @saved_cs_client */ ;
+/*!50003 SET character_set_results = @saved_cs_results */ ;
+/*!50003 SET collation_connection  = @saved_col_connection */ ;
+/*!50003 DROP PROCEDURE IF EXISTS `sp_AgregarProducto` */;
+/*!50003 SET @saved_cs_client      = @@character_set_client */ ;
+/*!50003 SET @saved_cs_results     = @@character_set_results */ ;
+/*!50003 SET @saved_col_connection = @@collation_connection */ ;
+/*!50003 SET character_set_client  = utf8mb4 */ ;
+/*!50003 SET character_set_results = utf8mb4 */ ;
+/*!50003 SET collation_connection  = utf8mb4_general_ci */ ;
+/*!50003 SET @saved_sql_mode       = @@sql_mode */ ;
+/*!50003 SET sql_mode              = 'NO_ZERO_IN_DATE,NO_ZERO_DATE,NO_ENGINE_SUBSTITUTION' */ ;
+DELIMITER ;;
+CREATE DEFINER=`root`@`localhost` PROCEDURE `sp_AgregarProducto`(	
+	pNombre varchar(100), 
+    pDescripcion varchar(1000), 
+    pPrecio decimal(10,2), 
+    pCantidad int(11), 
+    pImagenProducto varchar(100)
+)
+BEGIN
+
+	INSERT INTO tproducto (Nombre,Precio,Descripcion,Cantidad,Imagen,Estado)
+	VALUES (pNombre,pPrecio,pDescripcion,pCantidad,pImagenProducto,1);
+
+END ;;
+DELIMITER ;
+/*!50003 SET sql_mode              = @saved_sql_mode */ ;
+/*!50003 SET character_set_client  = @saved_cs_client */ ;
+/*!50003 SET character_set_results = @saved_cs_results */ ;
+/*!50003 SET collation_connection  = @saved_col_connection */ ;
+/*!50003 DROP PROCEDURE IF EXISTS `sp_ConsultarProducto` */;
+/*!50003 SET @saved_cs_client      = @@character_set_client */ ;
+/*!50003 SET @saved_cs_results     = @@character_set_results */ ;
+/*!50003 SET @saved_col_connection = @@collation_connection */ ;
+/*!50003 SET character_set_client  = utf8mb4 */ ;
+/*!50003 SET character_set_results = utf8mb4 */ ;
+/*!50003 SET collation_connection  = utf8mb4_general_ci */ ;
+/*!50003 SET @saved_sql_mode       = @@sql_mode */ ;
+/*!50003 SET sql_mode              = 'NO_ZERO_IN_DATE,NO_ZERO_DATE,NO_ENGINE_SUBSTITUTION' */ ;
+DELIMITER ;;
+CREATE DEFINER=`root`@`localhost` PROCEDURE `sp_ConsultarProducto`(
+   pConsecutivo INT
+)
+BEGIN
+
+	SELECT 	Consecutivo,
+			Nombre,
+			Precio,
+			Descripcion,
+			Cantidad,
+			Imagen,
+			Estado,
+            CASE WHEN Estado = 1 THEN 'Activo' ELSE 'Inactivo' END 'EstadoDescripcion'
+	FROM 	tproducto
+    WHERE	Consecutivo = pConsecutivo;
+
+END ;;
+DELIMITER ;
+/*!50003 SET sql_mode              = @saved_sql_mode */ ;
+/*!50003 SET character_set_client  = @saved_cs_client */ ;
+/*!50003 SET character_set_results = @saved_cs_results */ ;
+/*!50003 SET collation_connection  = @saved_col_connection */ ;
 /*!50003 DROP PROCEDURE IF EXISTS `sp_ConsultarProductos` */;
 /*!50003 SET @saved_cs_client      = @@character_set_client */ ;
 /*!50003 SET @saved_cs_results     = @@character_set_results */ ;
@@ -185,7 +308,7 @@ BEGIN
 			Cantidad,
 			Imagen,
 			Estado,
-            CASE WHEN Estado = 1 THEN 'Activo' ELSE 'INACTIVO' END 'EstadoDescripcion'
+            CASE WHEN Estado = 1 THEN 'Activo' ELSE 'Inactivo' END 'EstadoDescripcion'
 	FROM 	tproducto;
 
 END ;;
@@ -323,4 +446,4 @@ DELIMITER ;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2026-03-18 22:42:56
+-- Dump completed on 2026-03-25 21:53:49
