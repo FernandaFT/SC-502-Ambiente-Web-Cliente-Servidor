@@ -2,15 +2,17 @@
 include_once $_SERVER["DOCUMENT_ROOT"]."/SC-502-Ambiente-Web-Cliente-Servidor/View/layout.php";
 include_once $_SERVER["DOCUMENT_ROOT"] . "/SC-502-Ambiente-Web-Cliente-Servidor/Controller/ProductoController.php";
 
-$todosProductos = ConsultarProductos();
-$productosActivos = array_filter($todosProductos ?? [], fn($p) => $p["EstadoDescripcion"] === "Activo");
-
+// $todosProductos = ConsultarProductos();
+// $productosActivos = array_filter($todosProductos ?? [], fn($p) => $p["EstadoDescripcion"] === "Activo");
+$productosActivos = ConsultarProductosActivos();
 ?>
+
 <!DOCTYPE html>
 <html lang="en">
-  <?php
-  MostrarCSS();
-  ?>
+
+<?php
+MostrarCSS();
+?>
 
 <body>
 
@@ -23,12 +25,12 @@ $productosActivos = array_filter($todosProductos ?? [], fn($p) => $p["EstadoDesc
   ?>
 
   <div class="overlay"></div>
-
   <main class="main-wrapper">
 
     <?php
     MostrarHeader();
     ?>
+
     <section class="section">
       <div class="container-fluid">
         <div class="title-wrapper pt-30">
@@ -37,17 +39,29 @@ $productosActivos = array_filter($todosProductos ?? [], fn($p) => $p["EstadoDesc
             <?php foreach ($productosActivos as $producto): ?>
             <div class="col-sm-6 col-md-4 col-lg-3">
               <div class="card h-100 shadow-sm">
-                <img src="<?= htmlspecialchars($producto['Imagen']) ?>"
-                     class="card-img-top object-fit-cover"
-                     style="height: 200px;"
-                     alt="<?= htmlspecialchars($producto['Nombre']) ?>">
+                
+              <img src="<?= htmlspecialchars($producto['Imagen']) ?>"
+                     class="card-img-top object-fit-contain"
+                     style="height: 200px; margin-top: 15px;">
+
                 <div class="card-body d-flex flex-column">
+
                   <h5 class="card-title"><?= htmlspecialchars($producto['Nombre']) ?></h5>
                   <p class="card-text text-muted small flex-grow-1"><?= htmlspecialchars($producto['Descripcion']) ?></p>
+
                   <div class="d-flex justify-content-between align-items-center mt-3">
                     <span class="fw-bold text-primary">₡<?= number_format((float) str_replace(',', '.', $producto['Precio']), 2) ?></span>
-                    <span class="badge bg-secondary">Stock: <?= (int) $producto['Cantidad'] ?></span>
+                    <span class="badge bg-secondary">Cantidad: <?= (int) $producto['Cantidad'] ?></span>
                   </div>
+
+                  <?php if (isset($_SESSION["ConsecutivoRol"]) && $_SESSION["ConsecutivoRol"] != 1) { ?>
+                    
+                  <button class="btn btn-primary btn-sm w-100 mt-3" onclick="AgregarProductoCarrito(<?= $producto['Consecutivo'] ?>)">
+                      <i class="fas fa-shopping-cart me-1"></i> Agregar al carrito
+                    </button>
+
+                  <?php } ?>
+
                 </div>
               </div>
             </div>
@@ -65,7 +79,7 @@ $productosActivos = array_filter($todosProductos ?? [], fn($p) => $p["EstadoDesc
     </section>
 
     <?php
-    MostrarFooter();
+    MostrarFooter()
     ?>
 
   </main>
@@ -73,6 +87,7 @@ $productosActivos = array_filter($todosProductos ?? [], fn($p) => $p["EstadoDesc
   <?php
   MostrarJS();
   ?>
+  <script src="../assets/funciones/inicio.js"></script>
 
 </body>
 
