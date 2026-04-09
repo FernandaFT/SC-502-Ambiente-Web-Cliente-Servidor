@@ -19,6 +19,43 @@ function AgregarProductoCarritoModel($consecutivoProducto, $consecutivoUsuario, 
     }
 }
 
+function PagarCarritoModel($consecutivoUsuario)
+{
+    try 
+    { 
+        $context = OpenDatabase();
+
+        $sp = "CALL sp_PagarCarrito('$consecutivoUsuario')";
+        $result = $context -> query($sp);
+
+        CloseDatabase($context);
+        return $result;
+    }
+    catch (Exception $e) 
+    {
+        return false;
+    }
+}
+
+function RemoverProductoCarritoModel($consecutivoCarrito)
+{
+    try 
+    { 
+        $context = OpenDatabase();
+
+        $sp = "CALL sp_RemoverProductoCarrito('$consecutivoCarrito')";
+        $result = $context -> query($sp);
+
+        CloseDatabase($context);
+        return $result;
+    }
+    catch (Exception $e) 
+    {
+        return false;
+    }
+}
+
+
 function ConsultarCarritoModel($consecutivoUsuario)
 {
     try 

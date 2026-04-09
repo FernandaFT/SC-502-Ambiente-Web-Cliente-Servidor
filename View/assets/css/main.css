@@ -5965,3 +5965,6 @@ h6,
 .ReadOnly{
   cursor: not-allowed;
 }
+.padding-row td {
+  padding-bottom: 15px !important;
+}

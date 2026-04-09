@@ -22,6 +22,49 @@ if(isset($_POST["btnAgregarProductoCarrito"])) {
 
 }
 
+if(isset($_POST["btnPagar"])) {
+     
+    $consecutivoUsuario = $_SESSION["Consecutivo"];
+
+    $result = PagarCarritoModel($consecutivoUsuario);
+
+    if ($result) {
+        ConsultarResumenCarrito();
+        header("Location: ../../View/vFactura/consultarFacturas.php");
+        exit;
+    } else {
+        $_POST["Mensaje"] = "El carrito no fue cancelado correctamente";
+    }
+}
+
+if(isset($_POST["btnRemoverProductoCarrito"])){
+    $consecutivoCarrito = $_POST["Consecutivo"];
+
+    $result = RemoverProductoCarritoModel($consecutivoCarrito);
+
+    if ($result) {
+        ConsultarResumenCarrito();
+        header("Location: ../../Views/vCarrito/consultarCarrito.php");
+        exit;
+    } else {
+        $_POST["Mensaje"] = "El producto no fue removido correctamente";
+    }
+}
+
+if(isset($_POST["btnRemoverProductoCarrito"])){
+    $consecutivoCarrito = $_POST["Consecutivo"];
+
+    $result = RemoverProductoCarritoModel($consecutivoCarrito);
+
+    if ($result) {
+        ConsultarResumenCarrito();
+        header("Location: ../../View/vCarrito/consultarCarrito.php");
+        exit;
+    } else {
+        $_POST["Mensaje"] = "El producto no fue removido correctamente";
+    }
+}
+
 function ConsultarCarrito()
 {
     $consecutivoUsuario = $_SESSION["Consecutivo"];

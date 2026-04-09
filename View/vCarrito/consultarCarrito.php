@@ -19,7 +19,7 @@ MostrarCSS();
   </div>
 
   <?php
-MostrarMenu();
+  MostrarMenu();
   ?>
 
   <div class="overlay"></div>
@@ -69,7 +69,7 @@ MostrarMenu();
                                             <?php
                                             foreach ($datosCarrito as $carrito) {
                                                 echo
-                                                '<tr>
+                                                '<tr class="padding-row">
                                                   <td>' . $carrito["ConsecutivoProducto"] . '</td>
                                                   <td>' . $carrito["Nombre"] . '</td>
                                                   <td>' . date('d/m/Y H:i:s', strtotime($carrito["FechaCarrito"])) . '</td>
@@ -97,7 +97,21 @@ MostrarMenu();
                                         </table>
                                         
                                     </div>
-                               
+
+                                    <?php if ($_SESSION["TotalPago"] > 0): ?>
+                                    <div class="mt-5 d-flex justify-content-end">
+                                      <div class="card border-0" style="min-width: 280px;">
+                                        <div class="card-body text-end">
+                                          <p class="fs-5 fw-semibold text-muted mb-1">Total a cancelar ₡ <?php echo number_format($_SESSION["TotalPago"], 2) ?></p>
+                                        
+                                          <form action="" method="POST">
+                                            <input id="btnPagar" name="btnPagar" type="submit" class="btn btn-success btn-lg w-100" value="Proceder al Pago">
+                                          </form>
+                                        
+                                        </div>
+                                   
+                                    </div>
+                                    <?php endif; ?>
                             </div>
 
                         </div>
@@ -111,6 +125,7 @@ MostrarMenu();
     ?>
 
   </main>
+
 
   <?php
   MostrarJS();
