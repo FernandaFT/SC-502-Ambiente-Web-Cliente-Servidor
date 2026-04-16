@@ -2,8 +2,6 @@
 include_once $_SERVER["DOCUMENT_ROOT"]."/SC-502-Ambiente-Web-Cliente-Servidor/View/layout.php";
 include_once $_SERVER["DOCUMENT_ROOT"] . "/SC-502-Ambiente-Web-Cliente-Servidor/Controller/ProductoController.php";
 
-// $todosProductos = ConsultarProductos();
-// $productosActivos = array_filter($todosProductos ?? [], fn($p) => $p["EstadoDescripcion"] === "Activo");
 $productosActivos = ConsultarProductosActivos();
 ?>
 
@@ -86,6 +84,7 @@ MostrarCSS();
         </div>
       </div>
     </section>
+
 
     <?php
     MostrarFooter()

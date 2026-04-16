@@ -44,7 +44,7 @@ if(isset($_POST["btnRemoverProductoCarrito"])){
 
     if ($result) {
         ConsultarResumenCarrito();
-        header("Location: ../../Views/vCarrito/consultarCarrito.php");
+        header("Location: ../../View/vCarrito/consultarCarrito.php");
         exit;
     } else {
         $_POST["Mensaje"] = "El producto no fue removido correctamente";
@@ -78,4 +78,20 @@ function ConsultarResumenCarrito()
 
     $_SESSION["TotalCantidad"] = $result["TotalCantidad"];
     $_SESSION["TotalPago"] = $result["TotalPago"];
+}
+
+function ConsultarFacturas()
+{
+    $consecutivoUsuario = $_SESSION["Consecutivo"];
+    return ConsultarFacturasModel($consecutivoUsuario);
+}
+
+function ConsultarDetallesFactura($consecutivoFactura)
+{
+    return ConsultarDetallesFacturaModel($consecutivoFactura);
+}
+
+function ConsultarDatos()
+{
+    return ConsultarDatosModel();
 }
